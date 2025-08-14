@@ -1,7 +1,7 @@
-name: Build Android App (Unsigned)
+name: Build Android App
 
 on:
-  workflow_dispatch: # Ejecutar manualmente desde GitHub
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,13 +23,11 @@ jobs:
       - name: Dar permisos de ejecución
         run: chmod +x ./gradlew
 
-      - name: Compilar AAB sin firma
+      - name: Compilar AAB
         run: ./gradlew bundleRelease
 
       - name: Guardar archivo .aab como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-unsigned
+          name: app-release
           path: app/build/outputs/bundle/release/app-release.aab
-
-      
