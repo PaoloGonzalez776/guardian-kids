@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="#E6F7FF">
+    <TextView android:id="@+id/blockText" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="🐧 Ups… se te acabó tu tiempo"
+        android:textColor="#0B3D91" android:textSize="22sp" android:gravity="center"/>
+</FrameLayout>

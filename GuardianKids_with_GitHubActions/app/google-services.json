@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "687018387054",
+    "project_id": "guardian-kids-75bfc",
+    "storage_bucket": "guardian-kids-75bfc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687018387054:android:5040c0dcd9c7ea48e2a87f",
+        "android_client_info": {
+          "package_name": "com.guardiankids.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZI2GYUeLvt2XSeVAAxSI6UfVJsLVoBw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
