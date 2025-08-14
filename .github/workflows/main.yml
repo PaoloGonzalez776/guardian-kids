@@ -1,4 +1,41 @@
-naim: vuild igsn app
+name: Build and Sign Android App
+
 on:
-  workfspach: odvlo
-  jobs: vuild:   run: ubntu-lats
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Dar permisos de ejecución
+        run: chmod +x ./gradlew
+
+      - name: Crear archivo keystore desde GitHub Secrets
+        run: echo "${{ secrets.SIGNING_KEYSTORE }}" | base64 --decode > my-release-key.jks
+
+      - name: Compilar AAB firmado
+        run: ./gradlew bundleRelease \
+          -Pandroid.injected.signing.store.file=my-release-key.jks \
+          -Pandroid.injected.signing.store.password=${{ secrets.SIGNING_KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.SIGNING_KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.SIGNING_KEY_PASSWORD }}
+
+      - name: Guardar archivo .aab como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-signed
+          path: app/build/outputs/bundle/release/app-release.aab
+
