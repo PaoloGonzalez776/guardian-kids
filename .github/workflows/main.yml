@@ -1,7 +1,7 @@
-name: Build and Sign Android App
+name: Build Android App (Unsigned)
 
 on:
-  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+  workflow_dispatch: # Ejecutar manualmente desde GitHub
 
 jobs:
   build:
@@ -23,19 +23,13 @@ jobs:
       - name: Dar permisos de ejecución
         run: chmod +x ./gradlew
 
-      - name: Crear archivo keystore desde GitHub Secrets
-        run: echo "${{ secrets.SIGNING_KEYSTORE }}" | base64 --decode > my-release-key.jks
-
-      - name: Compilar AAB firmado
-        run: ./gradlew bundleRelease \
-          -Pandroid.injected.signing.store.file=my-release-key.jks \
-          -Pandroid.injected.signing.store.password=${{ secrets.SIGNING_KEYSTORE_PASSWORD }} \
-          -Pandroid.injected.signing.key.alias=${{ secrets.SIGNING_KEY_ALIAS }} \
-          -Pandroid.injected.signing.key.password=${{ secrets.SIGNING_KEY_PASSWORD }}
+      - name: Compilar AAB sin firma
+        run: ./gradlew bundleRelease
 
       - name: Guardar archivo .aab como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-signed
+          name: app-release-unsigned
           path: app/build/outputs/bundle/release/app-release.aab
 
+      
